@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=600, height=600, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="5-day weather forecast for your location with D-pad navigation. Browse daily highs, lows, conditions, precipitation and wind.">
+  <meta name="mrbd-web-app-capable" content="yes">
+  <script>if(localStorage.getItem('weather_unlocked')!=='1')window.location.replace('lock.html');</script>
+  <title>Weather</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ============ HOME / CURRENT CONDITIONS ============ -->
+    <div id="home" class="screen">
+      <header class="header">
+        <h1 id="home-location">Weather</h1>
+        <span class="header-meta" id="status-indicator">&mdash;</span>
+      </header>
+
+      <div class="content">
+        <!-- Loading state -->
+        <div id="home-loading" class="loading-container hidden">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">Loading forecast&hellip;</div>
+        </div>
+
+        <!-- Error state -->
+        <div id="home-error" class="error-container hidden">
+          <div class="error-icon">&#9888;</div>
+          <div class="error-message">Could not load weather.</div>
+        </div>
+
+        <!-- Current conditions hero -->
+        <div id="home-current" class="hero hidden">
+          <div class="hero-icon" id="cur-icon">&#9728;</div>
+          <div class="hero-temp" id="cur-temp">&mdash;&deg;</div>
+          <div class="hero-cond" id="cur-cond">&mdash;</div>
+          <div class="hero-meta">
+            <span id="cur-hilo">H &mdash;&deg; &nbsp; L &mdash;&deg;</span>
+            <span id="cur-wind">&#127788; &mdash;</span>
+          </div>
+          <div class="unit-toggle-wrap">
+            <button class="unit-toggle focusable" data-action="toggle-unit"
+                    role="switch" aria-checked="false" aria-label="Temperature unit, Celsius or Fahrenheit">
+              <span class="unit-seg" data-unit="c">&deg;C</span>
+              <span class="unit-seg" data-unit="f">&deg;F</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav-bar">
+        <button class="nav-item primary focusable" data-action="open-forecast">5-Day Forecast</button>
+        <button class="nav-item focusable" data-action="open-location">Location</button>
+        <button class="nav-item focusable" data-action="refresh">&#8635;</button>
+      </nav>
+    </div>
+
+    <!-- ============ 5-DAY FORECAST LIST ============ -->
+    <div id="forecast" class="screen hidden">
+      <header class="header">
+        <h1>5-Day Forecast</h1>
+        <span class="header-hint">&#8249; Back</span>
+      </header>
+      <div class="content scroll-container">
+        <div id="forecast-list" class="list-container"></div>
+      </div>
+    </div>
+
+    <!-- ============ DAY DETAIL ============ -->
+    <div id="detail" class="screen hidden">
+      <header class="header">
+        <h1 id="detail-day">Day</h1>
+        <span class="header-hint">&#8249; Back</span>
+      </header>
+      <div class="content">
+        <div class="hero">
+          <div class="hero-icon" id="detail-icon">&#9728;</div>
+          <div class="hero-cond" id="detail-cond">&mdash;</div>
+        </div>
+        <div class="data-grid">
+          <div class="stat-tile">
+            <div class="stat-label">High</div>
+            <div class="stat-value text-accent" id="detail-high">&mdash;&deg;</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-label">Low</div>
+            <div class="stat-value" id="detail-low">&mdash;&deg;</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-label">Precip</div>
+            <div class="stat-value" id="detail-precip">&mdash;%</div>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-label">Max Wind</div>
+            <div class="stat-value" id="detail-wind">&mdash;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ LOCATION PICKER ============ -->
+    <div id="location" class="screen hidden">
+      <header class="header">
+        <h1>Location</h1>
+        <span class="header-hint">&#8249; Back</span>
+      </header>
+      <div class="content scroll-container">
+        <button class="list-item focusable" data-action="use-gps">
+          <span class="list-item-icon">&#128205;</span>
+          <span class="list-item-content">
+            <span class="list-item-title">Use My Location</span>
+            <span class="list-item-meta">Detect via GPS</span>
+          </span>
+        </button>
+        <div id="city-list" class="list-container"></div>
+      </div>
+    </div>
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/lock.html" },
+    { "source": "/(.*)", "destination": "/a" }
+  ]
+}
